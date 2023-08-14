@@ -40,7 +40,7 @@ public class Commands implements CommandExecutor {
                     Player p = (Player) sender;
                     gui.openInventory(p);
                 }
-            }if(args.length == 1){
+            }else if(args.length == 1){
                 if(args[0].equalsIgnoreCase("reload")){
                     if (sender.hasPermission("cr.reload")) {
                         pluginConfig.reloadConfig();
@@ -67,7 +67,16 @@ public class Commands implements CommandExecutor {
                     sender.sendMessage(Utilities.Color("&2/cr help &7- Shows this message"));
                     sender.sendMessage(Utilities.Color("&8&m--------------------------------"));
                 }
-            }if(args.length == 3){
+            } else if(args.length == 2 && args[0].equalsIgnoreCase("cr")){
+                String playerArg = args[1];
+                Player targetPlayer = Bukkit.getPlayer(playerArg);
+                if(targetPlayer != null){
+                    gui.openInventory(targetPlayer);
+                } else {
+                    sender.sendMessage(Utilities.Color("&cPlayer not found"));
+                }
+            }
+            else if(args.length == 3){
                 if(args[0].equalsIgnoreCase("reset")){
                     if(sender.hasPermission("cr.reset")){
                         Reward reward = rewardManager.getReward(args[1]);
@@ -103,3 +112,4 @@ public class Commands implements CommandExecutor {
         return false;
     }
 }
+
